@@ -42,6 +42,8 @@ fn main() {
 
                 if let Some(ref cover) = cover {
                     tag.push_picture(cover.clone());
+                } else {
+                    continue;
                 }
 
                 if let Err(err) = audio.save_to_path(&path) {
