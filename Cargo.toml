@@ -9,7 +9,6 @@ keywords = ["audio", "covers", "cli"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "4.3.16", features = ["derive"] }
 indicatif = "0.17.5"
 lofty = "0.15.0"
 walkdir = "2.3.3"
