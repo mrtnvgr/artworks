@@ -63,8 +63,7 @@ fn main() {
                 }
 
                 if let Err(err) = audio.save_to_path(&path) {
-                    eprintln!("\nFailed to save audio: {}", path.display());
-                    eprintln!("Error: {err}\n");
+                    eprintln!("Failed to save audio: {err}");
                 }
             }
         }
