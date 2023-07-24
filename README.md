@@ -1,5 +1,5 @@
 # artworks
 
-Embed album covers to audio files
+> **Always make backups of your files**
 
-**WARNING**: **Just in case, backup your files**
+Embed album covers to audio files
