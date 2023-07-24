@@ -14,6 +14,9 @@ struct Args {
 
     #[arg(long)]
     pub pretend: bool,
+
+    #[arg(long)]
+    pub resize: Option<u32>,
 }
 
 fn main() {
@@ -25,7 +28,7 @@ fn main() {
     let bar = get_progress_bar(folders.len() as u64);
 
     for folder in folders {
-        let mut cover: Option<Picture> = Picture::from_files(&folder);
+        let mut cover: Option<Picture> = Picture::from_files(&folder, args.resize);
 
         for path in fs::read_dir(folder).unwrap().flatten().map(|x| x.path()) {
             if let Ok(mut audio) = read_from_path(&path) {
@@ -35,8 +38,15 @@ fn main() {
 
                 if tag.picture_count() != 0 {
                     if cover.is_none() {
-                        let internal_cover = tag.get_picture_type(PictureType::CoverFront);
-                        cover = internal_cover.cloned();
+                        if let Some(int_cover) = tag.get_picture_type(PictureType::CoverFront) {
+                            let mut int_cover = int_cover.clone();
+
+                            if let Some(size) = args.resize {
+                                int_cover.resize(size, size);
+                            }
+
+                            cover = Some(int_cover);
+                        }
                     }
 
                     continue;
