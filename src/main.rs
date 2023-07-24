@@ -11,6 +11,9 @@ mod panics;
 #[derive(Parser)]
 struct Args {
     pub folder: PathBuf,
+
+    #[arg(long)]
+    pub pretend: bool,
 }
 
 fn main() {
@@ -43,6 +46,10 @@ fn main() {
                 if let Some(ref cover) = cover {
                     tag.push_picture(cover.clone());
                 } else {
+                    continue;
+                }
+
+                if args.pretend {
                     continue;
                 }
 
