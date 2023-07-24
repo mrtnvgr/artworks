@@ -1,3 +1,4 @@
+use clap::Parser;
 use cover::Cover;
 use indicatif::{ProgressBar, ProgressStyle};
 use lofty::{read_from_path, AudioFile, Picture, PictureType, TaggedFileExt};
@@ -7,11 +8,16 @@ use walkdir::WalkDir;
 mod cover;
 mod panics;
 
-fn main() {
-    let folder = panics::get_folder();
-    panics::check_folder(&folder);
+#[derive(Parser)]
+struct Args {
+    pub folder: PathBuf,
+}
 
-    let folders: Vec<PathBuf> = get_directories(folder);
+fn main() {
+    let args = Args::parse();
+    panics::check_folder(&args.folder);
+
+    let folders: Vec<PathBuf> = get_directories(args.folder);
 
     let bar = get_progress_bar(folders.len() as u64);
 
