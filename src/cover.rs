@@ -21,9 +21,10 @@ pub trait Cover {
                 if filename.contains(allowed_file) && is_picture {
                     let mut reader = fs::File::open(file.path()).unwrap();
 
-                    let cover = Picture::from_reader(&mut reader).ok();
-                    if cover.is_some() {
-                        return cover;
+                    if let Ok(mut picture) = Picture::from_reader(&mut reader) {
+                        picture.set_pic_type(PictureType::CoverFront);
+
+                        return Some(picture);
                     }
                 }
             }
@@ -34,13 +35,3 @@ pub trait Cover {
 }
 
 impl Cover for Picture {}
-
-/// Forcing ``CoverFront`` picture type
-pub fn force_type(cover: &mut Option<Picture>) {
-    if cover.is_some() {
-        let mut picture = cover.clone().unwrap();
-        picture.set_pic_type(PictureType::CoverFront);
-
-        *cover = Some(picture);
-    }
-}

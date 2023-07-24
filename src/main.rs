@@ -26,7 +26,6 @@ fn main() {
 
     for folder in folders {
         let mut cover: Option<Picture> = Picture::from_files(&folder);
-        cover::force_type(&mut cover);
 
         for path in fs::read_dir(folder).unwrap().flatten().map(|x| x.path()) {
             if let Ok(mut audio) = read_from_path(&path) {
