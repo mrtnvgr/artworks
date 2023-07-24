@@ -43,7 +43,11 @@ pub trait Cover {
 
 impl Cover for Picture {
     fn resize(&mut self, width: u32, height: u32) {
-        let image = image::load_from_memory(self.data()).unwrap();
+        let Ok(image) = image::load_from_memory(self.data()) else {
+            eprintln!("Failed to resize the image");
+            return;
+        };
+
         image.resize(width, height, FilterType::Lanczos3);
 
         let mut target = Cursor::new(vec![]);
